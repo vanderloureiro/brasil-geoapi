@@ -19,8 +19,8 @@ public class ServicoDadosIbgeClient {
     private String localidadeApiUrl = "https://servicodados.ibge.gov.br/api/v1/localidades";
     private RestTemplate restTemplate;
 
-    public ServicoDadosIbgeClient(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public ServicoDadosIbgeClient() {
+        this.restTemplate = new RestTemplate();
     }
     
     public List<EstadoDto> buscarTodosEstados() {
