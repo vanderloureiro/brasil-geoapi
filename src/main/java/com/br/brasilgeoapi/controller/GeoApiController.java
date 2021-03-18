@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.br.brasilgeoapi.client.ServicoDadosIbgeClient;
 import com.br.brasilgeoapi.domain.EstadoDto;
-import com.br.brasilgeoapi.domain.MunicipioDto;
 import com.br.brasilgeoapi.domain.RetornoDto;
 import com.br.brasilgeoapi.service.PesquisaService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,18 +35,14 @@ public class GeoApiController {
         return ResponseEntity.ok().body(this.service.buscarTodos());
     }
 
-    @GetMapping("/estados")
+    @GetMapping("/csv")
     public ResponseEntity<List<EstadoDto>> getEstados() {
-        return ResponseEntity.ok().body(this.client.buscarTodosEstados());
+        return ResponseEntity.ok().body(null);
     }
 
-    @GetMapping("/municipios/ce")
-    public ResponseEntity<List<MunicipioDto>> getMunicipiosCE() {
-        return ResponseEntity.ok().body(this.client.buscarMunicipiosPorUF("CE"));
+    @GetMapping("/municipio/{nomeCidade}")
+    public ResponseEntity<Long> buscarIdMunicipioPorNome(@PathVariable String nomeCidade) {
+        return ResponseEntity.ok().body(this.service.buscarIdCidadePorNome(nomeCidade));
     }
 
-    @GetMapping("/municipios")
-    public ResponseEntity<List<MunicipioDto>> getMunicipios() {
-        return ResponseEntity.ok().body(this.client.buscarTodosMunicipios());
-    }
 }

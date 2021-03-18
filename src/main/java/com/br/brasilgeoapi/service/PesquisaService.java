@@ -7,6 +7,7 @@ import com.br.brasilgeoapi.client.ServicoDadosIbgeClient;
 import com.br.brasilgeoapi.domain.EstadoDto;
 import com.br.brasilgeoapi.domain.MunicipioDto;
 import com.br.brasilgeoapi.domain.RetornoDto;
+import com.br.brasilgeoapi.exception.NotFoundException;
 
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,15 @@ public class PesquisaService {
 
     public PesquisaService(ServicoDadosIbgeClient client) {
         this.client = client;
+    }
+
+    public Long buscarIdCidadePorNome(String nome) {
+
+        return this.client.buscarTodosMunicipios().stream()
+            .filter(municipio -> municipio.getNome().equals(nome))
+            .findFirst()
+            .orElseThrow(() -> new NotFoundException("Cidade não encontrada!"))
+            .getId();
     }
 
     public List<RetornoDto> buscarTodos() {
