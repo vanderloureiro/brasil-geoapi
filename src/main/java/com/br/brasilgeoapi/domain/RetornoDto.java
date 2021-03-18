@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class RetornoDto {
     
-    private String idEstado;
+    private Long idEstado;
     private String siglaEstado;
     private String regiaoNome;
     private String nomeCidade;

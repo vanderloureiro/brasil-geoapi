@@ -5,6 +5,8 @@ import java.util.List;
 import com.br.brasilgeoapi.client.ServicoDadosIbgeClient;
 import com.br.brasilgeoapi.domain.EstadoDto;
 import com.br.brasilgeoapi.domain.MunicipioDto;
+import com.br.brasilgeoapi.domain.RetornoDto;
+import com.br.brasilgeoapi.service.PesquisaService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,14 +23,16 @@ import io.swagger.annotations.Api;
 public class GeoApiController {
 
     private ServicoDadosIbgeClient client;
+    private PesquisaService service;
 
-    public GeoApiController(ServicoDadosIbgeClient client) {
+    public GeoApiController(ServicoDadosIbgeClient client, PesquisaService service) {
         this.client = client;
+        this.service = service;
     }
     
     @GetMapping
-    public ResponseEntity<String> index() {
-        return ResponseEntity.ok().body("Hello world");
+    public ResponseEntity<List<RetornoDto>> buscaTodos() {
+        return ResponseEntity.ok().body(this.service.buscarTodos());
     }
 
     @GetMapping("/estados")
