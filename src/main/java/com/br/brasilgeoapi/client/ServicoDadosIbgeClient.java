@@ -28,10 +28,8 @@ public class ServicoDadosIbgeClient {
 
         ResponseEntity<EstadoDto[]> response = this.restTemplate
             .exchange(url, HttpMethod.GET, null, EstadoDto[].class);
-        
-        if (response.getStatusCode() != HttpStatus.OK) {
-            throw new BadRequestException("Erro na consulta de ServiçoDadosIBGE");
-        }
+        verificarSeErroNaRequisicao(response.getStatusCode());
+
         return Arrays.asList(response.getBody());
     }
 
@@ -40,10 +38,8 @@ public class ServicoDadosIbgeClient {
 
         ResponseEntity<MunicipioDto[]> response = this.restTemplate
             .exchange(url, HttpMethod.GET, null, MunicipioDto[].class);
-        
-        if (response.getStatusCode() != HttpStatus.OK) {
-            throw new BadRequestException("Erro na consulta de ServiçoDadosIBGE");
-        }
+        verificarSeErroNaRequisicao(response.getStatusCode());
+
         return Arrays.asList(response.getBody());
     }
 
@@ -52,10 +48,14 @@ public class ServicoDadosIbgeClient {
 
         ResponseEntity<MunicipioDto[]> response = this.restTemplate
             .exchange(url, HttpMethod.GET, null, MunicipioDto[].class);
-        
-        if (response.getStatusCode() != HttpStatus.OK) {
+        verificarSeErroNaRequisicao(response.getStatusCode());
+
+        return Arrays.asList(response.getBody());
+    }
+
+    private void verificarSeErroNaRequisicao(HttpStatus status) {
+        if (status != HttpStatus.OK) {
             throw new BadRequestException("Erro na consulta de ServiçoDadosIBGE");
         }
-        return Arrays.asList(response.getBody());
     }
 }
