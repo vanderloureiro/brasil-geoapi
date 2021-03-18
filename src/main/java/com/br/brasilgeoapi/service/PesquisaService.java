@@ -11,6 +11,9 @@ import com.br.brasilgeoapi.exception.NotFoundException;
 
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class PesquisaService {
     
@@ -21,15 +24,17 @@ public class PesquisaService {
     }
 
     public Long buscarIdCidadePorNome(String nome) {
-
+        log.info("Buscando cidade: " + nome);
         return this.client.buscarTodosMunicipios().stream()
             .filter(municipio -> municipio.getNome().equals(nome))
             .findFirst()
             .orElseThrow(() -> new NotFoundException("Cidade não encontrada!"))
             .getId();
+
     }
 
     public List<RetornoDto> buscarTodos() {
+        log.info("Buscando todos os registros");
         List<EstadoDto> estadosBuscados = this.client.buscarTodosEstados();
         ArrayList<RetornoDto> listaRetorno = new ArrayList<>();
         estadosBuscados.forEach(estado -> {
