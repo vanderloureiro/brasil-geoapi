@@ -12,16 +12,20 @@ import com.br.brasilgeoapi.exception.BadRequestException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
-public class PesquisaCsvService {
+public class GeradorCsvService {
 
     private PesquisaService pesquisaService;
 
-    public PesquisaCsvService(PesquisaService pesquisaService) {
+    public GeradorCsvService(PesquisaService pesquisaService) {
         this.pesquisaService = pesquisaService;
     }
 
     public void gerarCsv(HttpServletResponse response) {
+        log.info("Gerando CSV...");
         response.setContentType("text/csv; charset=UTF-8");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=download.csv");
         try {
@@ -30,6 +34,7 @@ public class PesquisaCsvService {
             os.write(this.gerarConteudo().getBytes("UTF-8"));
             response.flushBuffer();
         } catch (IOException e) {
+            log.error("Erro na criação de CSV");
             throw new BadRequestException("Erro na criação de CSV");
         }
     }

@@ -5,9 +5,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import com.br.brasilgeoapi.domain.RetornoDto;
-import com.br.brasilgeoapi.service.PesquisaCsvService;
+import com.br.brasilgeoapi.service.GeradorCsvService;
 import com.br.brasilgeoapi.service.PesquisaService;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +26,11 @@ import io.swagger.annotations.ApiOperation;
 public class GeoApiController {
 
     private PesquisaService service;
-    private PesquisaCsvService pesquisaCsvService;
+    private GeradorCsvService geradorCsvService;
 
-    public GeoApiController(PesquisaService service, PesquisaCsvService pesquisaCsvService) {
+    public GeoApiController(PesquisaService service, GeradorCsvService geradorCsvService) {
         this.service = service;
-        this.pesquisaCsvService = pesquisaCsvService;
+        this.geradorCsvService = geradorCsvService;
     }
     
     @GetMapping
@@ -41,10 +42,11 @@ public class GeoApiController {
     @GetMapping("/csv")
     @ApiOperation(value = "Busca todas as cidades e estados e retorna em CSV")
     public ResponseEntity<?> buscarTodosEmCsv(HttpServletResponse response) {
-        this.pesquisaCsvService.gerarCsv(response);
+        this.geradorCsvService.gerarCsv(response);
         return ResponseEntity.ok().build();
     }
 
+    @Cacheable("cidade")
     @GetMapping("/municipio/{nomeCidade}")
     @ApiOperation(value = "Busca uma cidade por nome e retorna seu ID", response = Long.class)
     public ResponseEntity<Long> buscarIdMunicipioPorNome(@PathVariable String nomeCidade) {

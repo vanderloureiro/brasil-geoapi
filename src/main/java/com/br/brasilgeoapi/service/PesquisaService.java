@@ -26,7 +26,7 @@ public class PesquisaService {
     public Long buscarIdCidadePorNome(String nome) {
         log.info("Buscando cidade: " + nome);
         return this.client.buscarTodosMunicipios().stream()
-            .filter(municipio -> municipio.getNome().equals(nome))
+            .filter(municipio -> municipio.getNome().equalsIgnoreCase(nome))
             .findFirst()
             .orElseThrow(() -> new NotFoundException("Cidade não encontrada!"))
             .getId();
