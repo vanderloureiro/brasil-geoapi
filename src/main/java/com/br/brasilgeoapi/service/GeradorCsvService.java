@@ -41,6 +41,7 @@ public class GeradorCsvService {
     
     private String gerarConteudo() {
         List<RetornoDto> registros = this.pesquisaService.buscarTodos();
+        log.info("Gerando conteúdo do CSV...");
         StringBuilder linhas = new StringBuilder();
         registros.forEach(registro -> {
             linhas.append(this.gerarLinha(registro));
