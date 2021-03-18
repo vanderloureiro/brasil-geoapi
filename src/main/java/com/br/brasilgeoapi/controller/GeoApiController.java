@@ -48,9 +48,9 @@ public class GeoApiController {
 
     @Cacheable("cidade")
     @GetMapping("/municipio/{nomeCidade}")
-    @ApiOperation(value = "Busca uma cidade por nome e retorna seu ID", response = Long.class)
-    public ResponseEntity<Long> buscarIdMunicipioPorNome(@PathVariable String nomeCidade) {
-        return ResponseEntity.ok().body(this.service.buscarIdCidadePorNome(nomeCidade));
+    @ApiOperation(value = "Busca uma cidade por nome e retorna seu ID", response = String.class)
+    public ResponseEntity<String> buscarIdMunicipioPorNome(@PathVariable String nomeCidade) {
+        return ResponseEntity.ok().body(this.service.buscarIdCidadePorNome(nomeCidade).toString());
     }
 
 }
