@@ -30,7 +30,6 @@ public class PesquisaService {
             .findFirst()
             .orElseThrow(() -> new NotFoundException("Cidade não encontrada!"))
             .getId();
-
     }
 
     public List<RetornoDto> buscarTodos() {
